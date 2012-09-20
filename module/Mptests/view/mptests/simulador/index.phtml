@@ -1,0 +1,18 @@
+<div class="hero-unit">
+    <h1><?php echo sprintf($this->translate('%s Simulator'), $sistema) ?></h1>
+    <p><?php echo $this->translate('Amount to pay') ?>: <?php echo $this->escapeHtml($amount); ?></p> 
+</div>
+
+<div class="row">
+    <div class="span6" style="text-align: center">
+        <h2><?php echo $this->translate('Simulate succesful payment') ?></h2>
+        <a href="<?php echo $this->url('simulador', array('sistema' => $sistema, 'modulo' => $modulo,
+    'action' => 'ok', 'id' => $id));
+?>" class="btn-large" style="background:green;color:white;" >OK</a>
+    </div>
+
+    <div class="span6" style="text-align: center">
+        <h2><?php echo $this->translate('Simulate unsuccesful payment') ?></h2>
+        <a href="<?php echo $this->url('simulador', array('sistema' => $sistema, 'modulo' => $modulo, 'action' => 'fail', 'id' => $id)); ?>"  class="btn-large" style="background:red;color:white;">FAIL</a>
+    </div>
+</div>

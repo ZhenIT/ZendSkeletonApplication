@@ -1,0 +1,23 @@
+<div class="hero-unit">
+    <h1><?php echo sprintf($this->translate('%s Simulator'), $sistema) ?></h1>
+    <p><?php echo $this->translate('Unsuccesful payment'); ?></p> 
+</div>
+
+<div class="row">
+    <div class="span12" style="text-align: center">
+        <form action="<?php echo $url;?>" method="<?php echo $method;?>">
+            <?php foreach ($data as $key => $value){ ?>
+                <input type="hidden" name="<?php echo $key;?>" value="<?php echo $value;?>"/>
+            <?php } ?>
+            <input type="submit" class="btn-large" value="<?php echo $this->translate('Accept') ?>"/>
+        </form>
+            
+    </div>
+
+    <div class="span12" style="text-align: center">
+        <h2>Respuesta recibida por el simulador al notificar el resultado a la tienda</h2>
+        <pre>
+            <?php echo $this->escapeHtml($response);?>
+        </pre>
+   </div>
+</div>

@@ -2,7 +2,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Mptests\Controller\Test' => 'Mptests\Controller\TestController',
+            'Mptests\Controller\Simulador' => 'Mptests\Controller\SimuladorController',
         ),
     ),
     'router' => array(
@@ -10,7 +10,7 @@ return array(
             'simulador' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/test[/:sistema][/:modulo][/:action][/:id]',
+                    'route' => '[/:sistema][/:modulo][/:action][/:id]',
                     'constraints' => array(
                         'action'    => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'sistema'   => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -18,7 +18,7 @@ return array(
                         'id'    => '[0-9]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Mptests\Controller\Test',
+                        'controller' => 'Mptests\Controller\Simulador',
                         'action' => 'index',
                     ),
                 ),
@@ -27,7 +27,7 @@ return array(
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            'album' => __DIR__ . '/../view',
+            'simulador' => __DIR__ . '/../view',
         ),
     ),
 );

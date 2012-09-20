@@ -26,17 +26,17 @@ abstract class Simulador {
         return $this->RETURN_METHOD;
     }
 
-    public function getReturnData(bool $result);
+    abstract public function getReturnData($result);
 
-    public function getAmount(HttpRequest $request);
+    abstract public function getAmount(HttpRequest $request);
 
-    public function getLang(HttpRequest $request);
+    abstract public function getLang(HttpRequest $request);
 
-    public function notify($result);
+    abstract public function notify($result);
 
-    public function getUrlOk();
+    abstract public function getUrlOk();
 
-    public function getUrlFail();
+    abstract public function getUrlFail();
 
-    public function safeReferencia(HttpRequest $request);
+    abstract public function safeReferencia(HttpRequest $request);
 }

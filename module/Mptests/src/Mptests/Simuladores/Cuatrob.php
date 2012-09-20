@@ -8,11 +8,11 @@ use Zend\Http\PhpEnvironment\Request as HttpRequest;
 use Zend\Session\Container;
 use Mptests\Simuladores\Simulador;
 
-class Cuatrob implements Simulador {
+class Cuatrob extends Simulador {
 
     const RETURN_METHOD = 'GET';
 
-    public function toIso($val, int $type) {
+    public function toIso($val, $type) {
         if ($type == $this->ISO_TYPE_CURR) {
             $monedas_4b = array(
                 "978" => "EUR",
@@ -54,7 +54,7 @@ class Cuatrob implements Simulador {
         return $request->getPost('Idioma', null);
     }
 
-    public function notify(bool $result) {
+    public function notify($result) {
         $client = new Client($this->getUrlResultado($result), array(
                     'timeout' => 30
                 ));
@@ -74,11 +74,11 @@ class Cuatrob implements Simulador {
     public function safeReferencia(HttpRequest $request) {
         $sessionContainer = new Container('cuatrob');
         $sessionContainer->store = $request->getPost('id_comercio');
-
-        $this->transaction->referencia = $res->getStatusCode() . "\n" . $res->getBody();
+        
+        $this->transaction->referencia = $request->getPost('order');;
     }
 
-    public function getReturnData(bool $result) {
+    public function getReturnData($result) {
         $sessionContainer = new Container('cuatrob');
         if ($result)
             $arr_result = array(
@@ -105,20 +105,20 @@ class Cuatrob implements Simulador {
     private function getUrlCompra(HttpRequest $request) {
         switch ($this->transaction->modulo) {
             case 'MAGE':
-                $referer = str_replave('/index.php', '', $this->getServer('HTTP_REFERER'));
-                $referer = str_replave('/pasat4b/standard/redirect', '', $referer);
-                return $referer . '/pasat4b/standard/compra?store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
+                $referer = str_replace('/index.php', '', $this->transaction->dominio);
+                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
+                return $referer . '/index.php/pasat4b/standard/compra?store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
             default:
                 break;
         }
     }
 
-    private function getUrlResultado(bool $resultado) {
+    private function getUrlResultado($resultado) {
         switch ($this->transaction->modulo) {
             case 'MAGE':
-                $referer = str_replave('/index.php', '', $this->getServer('HTTP_REFERER'));
-                $referer = str_replave('/pasat4b/standard/redirect', '', $referer);
-                return $referer . '/pasat4b/standard/compra?store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
+                $referer = str_replace('/index.php', '', $this->transaction->dominio);
+                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
+                return $referer . '/index.php/pasat4b/standard/resultado?' . http_build_query($this->getReturnData($result));
             default:
                 break;
         }
@@ -127,9 +127,9 @@ class Cuatrob implements Simulador {
     private function getUrlRecibo() {
         switch ($this->transaction->modulo) {
             case 'MAGE':
-                $referer = str_replave('/index.php', '', $this->transaction->dominio);
-                $referer = str_replave('/pasat4b/standard/redirect', '', $referer);
-                return $referer . '/pasat4b/standard/recibo';
+                $referer = str_replace('/index.php', '', $this->transaction->dominio);
+                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
+                return $referer . '/index.php/pasat4b/standard/recibo';
             default:
                 break;
         }

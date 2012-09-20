@@ -6,14 +6,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Mptests\Model\Transaction;
 
-class TestController extends AbstractActionController {
+class SimuladorController extends AbstractActionController {
 
     protected $transactionTable;
     protected $simulador;
-
-    public function __construct(Adapter $adapter) {
-        $this->getTransactionTable();
-    }
 
     public function getTransactionTable() {
         if (!$this->transactionTable) {
@@ -26,7 +22,7 @@ class TestController extends AbstractActionController {
     private function getSimulador($id) {
         if (!$this->simulador) {
             $clname = 'Mptests\\Simuladores\\' . ucfirst($this->params()->fromRoute('sistema'));
-            $this->simulador = new $clname($id);
+            $this->simulador = new $clname($id, $this->getTransactionTable());
         }
         return $this->simulador;
     }
@@ -34,19 +30,20 @@ class TestController extends AbstractActionController {
     public function indexAction() {
         //Resgitramos la transacción
         $transaction = new Transaction();
-        $data = array(
-            'dominio' => $this->getRequest()->getServer('HTTP_REFERER'),
-            'modulo' => $this->params()->fromRoute('modulo'),
-            'sistema' => $this->params()->fromRoute('sistema'),
+        $transaction->exchangeArray(
+                array(
+                    'dominio' => $this->getRequest()->getServer('HTTP_REFERER', 'http://127.0.0.1/'),
+                    'modulo' => $this->params()->fromRoute('modulo'),
+                    'sistema' => $this->params()->fromRoute('sistema'),
+                )
         );
-        $transaction->exchangeArray($data);
         $this->getTransactionTable()->saveTransaction($transaction);
         $id = $this->getTransactionTable()->getLastInsertValue();
 
         If (!$this->simulador)
-            $this->simulador = $this->getSimulador($id, $this->getTransactionTable());
+            $this->simulador = $this->getSimulador($id);
         $this->simulador->safeReferencia($this->getRequest());
-        
+
         return new ViewModel(array(
                     'id' => $id,
                     'lang' => $this->simulador->getLang($this->getRequest()),
@@ -58,9 +55,8 @@ class TestController extends AbstractActionController {
 
     public function okAction() {
         $id = $this->params()->fromRoute('id');
-
         If (!$this->simulador)
-            $this->simulador = $this->getSimulador($id, $this->getTransactionTable());
+            $this->simulador = $this->getSimulador($id);
         $this->simulador->notify(true);
 
         return new ViewModel(array(

@@ -11,6 +11,7 @@ use Mptests\Simuladores\Simulador;
 class Cuatrob extends Simulador {
 
     const RETURN_METHOD = 'GET';
+    var $sistema = 'Pasat 4B';
 
     public function toIso($val, $type) {
         if ($type == self::ISO_TYPE_CURR) {

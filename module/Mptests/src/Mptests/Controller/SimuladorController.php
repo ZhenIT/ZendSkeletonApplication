@@ -48,7 +48,7 @@ class SimuladorController extends AbstractActionController {
                     'id' => $id,
                     'lang' => $this->simulador->getLang($this->getRequest()),
                     'amount' => $this->simulador->getAmount($this->getRequest()),
-                    'sistema' => $this->params()->fromRoute('sistema'),
+                    'sistema' => $this->simulador->sistema,
                     'modulo' => $this->params()->fromRoute('modulo'),
                 ));
     }
@@ -64,7 +64,7 @@ class SimuladorController extends AbstractActionController {
                     'data' => $this->simulador->getReturnData(true),
                     'method' => $this->simulador->getReturnMethod(),
                     'response' => $this->simulador->transaction->response2,
-                    'sistema' => get_class($this->simulador)            
+                    'sistema' => $this->simulador->sistema           
                 ));
     }
 
@@ -75,11 +75,11 @@ class SimuladorController extends AbstractActionController {
         $this->simulador->notify(false);
         
         return new ViewModel(array(
-                    'url' => $this->simulador->getUrlFail(),
+                    'simulador' => $this->simulador->getUrlFail(),
                     'data' => $this->simulador->getReturnData(false),
                     'method' => $this->simulador->getReturnMethod(),
                     'response' => $this->simulador->transaction->response2,
-                    'sistema' => get_class($this->simulador)
+                    'sistema' => $this->simulador->sistema
                 ));
     }
 

@@ -9,7 +9,9 @@ abstract class Simulador {
     const ISO_TYPE_LANG = 1;
     const ISO_TYPE_CURR = 2;
     const RETURN_METHOD = 'POST';
-
+    
+    var $sistema = null;
+    
     public $transaction;
     public $transactionTable;
 

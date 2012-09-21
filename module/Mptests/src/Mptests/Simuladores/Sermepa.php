@@ -5,7 +5,8 @@ namespace Mptests\Simuladores;
 use Mptests\Simuladores\Simulador;
 
 class Sermepa extends Simulador {
-
+    var $sistema = 'Sermepa';
+    
     public function getAmount($request, $modulo) {
         return $request->getRequest('Ds_Merchant_Amount', null);
     }

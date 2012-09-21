@@ -48,6 +48,7 @@ class SimuladorController extends AbstractActionController {
                     'id' => $id,
                     'lang' => $this->simulador->getLang($this->getRequest()),
                     'amount' => $this->simulador->getAmount($this->getRequest()),
+                    'sistema_part' => $this->params()->fromRoute('sistema'),
                     'sistema' => $this->simulador->sistema,
                     'modulo' => $this->params()->fromRoute('modulo'),
                 ));

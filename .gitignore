@@ -9,3 +9,8 @@ nbproject
 composer.lock
 *~
 *bak
+cgi-bin
+conf
+error_docs
+statistics
+

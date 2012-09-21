@@ -63,7 +63,7 @@ class SimuladorController extends AbstractActionController {
                     'url' => $this->simulador->getUrlOk(),
                     'data' => $this->simulador->getReturnData(true),
                     'method' => $this->simulador->getReturnMethod(),
-                    'response' => $this->transcation->response2,
+                    'response' => $this->simulador->transaction->response2,
                     'sistema' => get_class($this->simulador)            
                 ));
     }
@@ -78,7 +78,7 @@ class SimuladorController extends AbstractActionController {
                     'url' => $this->simulador->getUrlFail(),
                     'data' => $this->simulador->getReturnData(false),
                     'method' => $this->simulador->getReturnMethod(),
-                    'response' => $this->transcation->response2,
+                    'response' => $this->simulador->transaction->response2,
                     'sistema' => get_class($this->simulador)
                 ));
     }

@@ -113,7 +113,7 @@ class Cuatrob extends Simulador {
         }
     }
 
-    private function getUrlResultado($resultado) {
+    private function getUrlResultado($resul) {
         switch ($this->transaction->modulo) {
             case 'MAGE':
                 $referer = str_replace('/index.php', '', $this->transaction->dominio);

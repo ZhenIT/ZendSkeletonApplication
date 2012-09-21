@@ -23,7 +23,7 @@ abstract class Simulador {
     }
 
     public function getReturnMethod() {
-        return $this->RETURN_METHOD;
+        return self::RETURN_METHOD;
     }
 
     abstract public function getReturnData($result);

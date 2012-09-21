@@ -88,9 +88,9 @@ class Cuatrob extends Simulador {
             );
         else
             $arr_result = array(
-                'result' => 0,
+                'result' => 2,
                 'coderror' => 666,
-                'deserror' => 'Simulaciópn de error'
+                'deserror' => 'Simulación de error'
             );
         return array_merge(
                         array(

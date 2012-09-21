@@ -63,7 +63,7 @@ class SimuladorController extends AbstractActionController {
                     'url' => $this->simulador->getUrlOk(),
                     'data' => $this->simulador->getReturnData(true),
                     'method' => $this->simulador->getReturnMethod(),
-                    'response' => $this->_transcation->response2,
+                    'response' => $this->transcation->response2,
                     'sistema' => get_class($this->simulador)            
                 ));
     }
@@ -73,7 +73,7 @@ class SimuladorController extends AbstractActionController {
         If (!$this->simulador)
             $this->simulador = $this->getSimulador($id, $this->getTransactionTable());
         $this->simulador->notify(false);
-
+        
         return new ViewModel(array(
                     'url' => $this->simulador->getUrlFail(),
                     'data' => $this->simulador->getReturnData(false),

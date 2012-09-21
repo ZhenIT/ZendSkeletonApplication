@@ -75,7 +75,7 @@ class SimuladorController extends AbstractActionController {
         $this->simulador->notify(false);
         
         return new ViewModel(array(
-                    'simulador' => $this->simulador->getUrlFail(),
+                    'url' => $this->simulador->getUrlFail(),
                     'data' => $this->simulador->getReturnData(false),
                     'method' => $this->simulador->getReturnMethod(),
                     'response' => $this->simulador->transaction->response2,

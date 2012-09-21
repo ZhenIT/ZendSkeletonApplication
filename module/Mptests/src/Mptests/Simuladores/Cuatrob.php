@@ -52,7 +52,7 @@ class Cuatrob extends Simulador {
     }
 
     public function getLang(HttpRequest $request) {
-        return $hits->toIso($request->getPost('Idioma', null),self::ISO_TYPE_LANG);
+        return $this->toIso($request->getPost('Idioma', null),self::ISO_TYPE_LANG);
     }
 
     public function notify($result) {

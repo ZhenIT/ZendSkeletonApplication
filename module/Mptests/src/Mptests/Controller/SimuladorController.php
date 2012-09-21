@@ -62,22 +62,24 @@ class SimuladorController extends AbstractActionController {
         return new ViewModel(array(
                     'url' => $this->simulador->getUrlOk(),
                     'data' => $this->simulador->getReturnData(true),
-                    'method' => $this->simulador->getReturnMethod()
+                    'method' => $this->simulador->getReturnMethod(),
+                    'response' => $this->_transcation->response2,
+                    'sistema' => get_class($this->simulador)            
                 ));
     }
 
     public function failAction() {
         $id = $this->params()->fromRoute('id');
-
         If (!$this->simulador)
             $this->simulador = $this->getSimulador($id, $this->getTransactionTable());
         $this->simulador->notify(false);
 
         return new ViewModel(array(
-                    'url' => $this->simulador->getUrlOk(),
+                    'url' => $this->simulador->getUrlFail(),
                     'data' => $this->simulador->getReturnData(false),
                     'method' => $this->simulador->getReturnMethod(),
                     'response' => $this->_transcation->response2,
+                    'sistema' => get_class($this->simulador)
                 ));
     }
 

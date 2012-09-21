@@ -13,7 +13,7 @@ class Cuatrob extends Simulador {
     const RETURN_METHOD = 'GET';
 
     public function toIso($val, $type) {
-        if ($type == $this->ISO_TYPE_CURR) {
+        if ($type == self::ISO_TYPE_CURR) {
             $monedas_4b = array(
                 "978" => "EUR",
                 "840" => "USD",
@@ -23,7 +23,7 @@ class Cuatrob extends Simulador {
             );
             return $monedas_4b[$val];
         }
-        if ($type == $this->ISO_TYPE_LANG) {
+        if ($type == self::ISO_TYPE_LANG) {
             $idiomas_4b = array("french" => "fr",
                 "german" => "de",
                 "english" => "en",
@@ -47,11 +47,11 @@ class Cuatrob extends Simulador {
         $this->transaction->response1 .= $res->getStatusCode() . "\n" . $res->getBody();
         $this->transactionTable->saveTransaction($this->transaction);
 
-        return $vals[2] . " " . $this->toIso($vals[1]);
+        return $vals[2] . " " . $this->toIso($vals[1],self::ISO_TYPE_CURR);
     }
 
     public function getLang(HttpRequest $request) {
-        return $request->getPost('Idioma', null);
+        return $hits->toIso($request->getPost('Idioma', null),self::ISO_TYPE_LANG);
     }
 
     public function notify($result) {

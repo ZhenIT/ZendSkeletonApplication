@@ -15,23 +15,23 @@ class Cuatrob extends Simulador {
 
     public function toIso($val, $type) {
         if ($type == self::ISO_TYPE_CURR) {
-            $monedas_4b = array(
+            $monedas = array(
                 "978" => "EUR",
                 "840" => "USD",
                 "826" => "GBP",
                 "392" => "JPY",
                 "156" => "CNY"
             );
-            return $monedas_4b[$val];
+            return $monedas[$val];
         }
         if ($type == self::ISO_TYPE_LANG) {
-            $idiomas_4b = array("french" => "fr",
+            $idiomas = array("french" => "fr",
                 "german" => "de",
                 "english" => "en",
                 "catalan" => "ca",
                 "espanol" => "es"
             );
-            return $idiomas_4b[$val];
+            return $idiomas[$val];
         }
     }
 
@@ -42,13 +42,13 @@ class Cuatrob extends Simulador {
         $res = $client->send();
         $vals = array();
         if ($res->isOk()) {
-            preg_match('/M([0-9]{3})([0-9])*/', $res->getBody(), $vals);
+            preg_match('/M([0-9]{3})([0-9]*)/', $res->getBody(), $vals);
         }
 
         $this->transaction->response1 .= $res->getStatusCode() . "\n" . $res->getBody();
         $this->transactionTable->saveTransaction($this->transaction);
 
-        return $vals[2] . " " . $this->toIso($vals[1],self::ISO_TYPE_CURR);
+        return ($vals[2]/100) . " " . $this->toIso($vals[1],self::ISO_TYPE_CURR);
     }
 
     public function getLang(HttpRequest $request) {

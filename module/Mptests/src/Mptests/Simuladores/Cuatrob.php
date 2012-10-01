@@ -111,8 +111,7 @@ class Cuatrob extends Simulador {
                 return $referer . '/index.php/pasat4b/standard/compra?store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
             case 'OC':
                 $referer = str_replace('/index.php', '', $this->transaction->dominio);
-                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
-                return $referer . '/index.php/route=payment/cuatrob/order&' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');                
+                return $referer . '/index.php?route=payment/cuatrob/order&' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');                
             default:
                 break;
         }
@@ -126,8 +125,7 @@ class Cuatrob extends Simulador {
                 return $referer . '/index.php/pasat4b/standard/resultado?' . http_build_query($this->getReturnData($result));
             case 'OC':
                 $referer = str_replace('/index.php', '', $this->transaction->dominio);
-                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
-                return $referer . '/index.php/route=payment/cuatrob/callback&' . http_build_query($this->getReturnData($result));               
+                return $referer . '/index.php?route=payment/cuatrob/callback&' . http_build_query($this->getReturnData($result));               
             default:
                 break;
         }
@@ -141,7 +139,6 @@ class Cuatrob extends Simulador {
                 return $referer . '/index.php/pasat4b/standard/recibo';
             case 'OC':
                 $referer = str_replace('/index.php', '', $this->transaction->dominio);
-                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
                 return $referer . '/index.php?route=checkout/success';                
             default:
                 break;

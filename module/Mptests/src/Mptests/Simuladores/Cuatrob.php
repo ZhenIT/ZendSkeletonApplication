@@ -48,7 +48,7 @@ class Cuatrob extends Simulador {
         $this->transaction->response1 .= $res->getStatusCode() . "\n" . $res->getBody();
         $this->transactionTable->saveTransaction($this->transaction);
 
-        return ($vals[2]/100) . " " . $this->toIso($vals[1],self::ISO_TYPE_CURR);
+        return number_format($vals[2]/100,2) . " " . $this->toIso($vals[1],self::ISO_TYPE_CURR);
     }
 
     public function getLang(HttpRequest $request) {
@@ -109,6 +109,10 @@ class Cuatrob extends Simulador {
                 $referer = str_replace('/index.php', '', $this->transaction->dominio);
                 $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
                 return $referer . '/index.php/pasat4b/standard/compra?store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
+            case 'OC':
+                $referer = str_replace('/index.php', '', $this->transaction->dominio);
+                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
+                return $referer . '/index.php/route=payment/cuatrob/order&' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');                
             default:
                 break;
         }
@@ -120,6 +124,10 @@ class Cuatrob extends Simulador {
                 $referer = str_replace('/index.php', '', $this->transaction->dominio);
                 $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
                 return $referer . '/index.php/pasat4b/standard/resultado?' . http_build_query($this->getReturnData($result));
+            case 'OC':
+                $referer = str_replace('/index.php', '', $this->transaction->dominio);
+                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
+                return $referer . '/index.php/route=payment/cuatrob/callback&' . http_build_query($this->getReturnData($result));               
             default:
                 break;
         }
@@ -131,6 +139,10 @@ class Cuatrob extends Simulador {
                 $referer = str_replace('/index.php', '', $this->transaction->dominio);
                 $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
                 return $referer . '/index.php/pasat4b/standard/recibo';
+            case 'OC':
+                $referer = str_replace('/index.php', '', $this->transaction->dominio);
+                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
+                return $referer . '/index.php?route=checkout/success';                
             default:
                 break;
         }

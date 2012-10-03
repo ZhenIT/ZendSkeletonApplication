@@ -110,10 +110,10 @@ class Cuatrob extends Simulador {
                 $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
                 return $referer . '/index.php/pasat4b/standard/compra?store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
             case 'OC':
-                $referer = str_replace('/index.php', '', $this->transaction->dominio);
+                $referer = substr($this->transaction->dominio, strpos($this->transaction->dominio,'/index.php'));
                 return $referer . '/index.php?route=payment/cuatrob/order&store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
            case 'PRE':
-                $referer = str_replace('/index.php', '', $this->transaction->dominio);
+                $referer = substr($this->transaction->dominio, strpos($this->transaction->dominio,'/index.php'));
                 return $referer . '/index.php?fc=module&module=qb&controller=compra&store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');                                
             default:
                 break;

@@ -45,7 +45,7 @@ class Cuatrob extends Simulador {
             preg_match('/M([0-9]{3})([0-9]*)/', $res->getBody(), $vals);
         }
 
-        $this->transaction->response1 .= $res->getStatusCode() . "\n" . $res->getBody();
+        $this->transaction->response1 .= $this->getUrlCompra($request)."->>".$res->getStatusCode() . "\n" . $res->getBody();
         $this->transactionTable->saveTransaction($this->transaction);
 
         return number_format($vals[2]/100,2) . " " . $this->toIso($vals[1],self::ISO_TYPE_CURR);

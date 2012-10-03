@@ -110,10 +110,10 @@ class Cuatrob extends Simulador {
                 $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
                 return $referer . '/index.php/pasat4b/standard/compra?store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
             case 'OC':
-                $referer = substr($this->transaction->dominio, strpos($this->transaction->dominio,'/index.php'));
+                $referer = substr($this->transaction->dominio,0, strpos($this->transaction->dominio,'/index.php'));
                 return $referer . '/index.php?route=payment/cuatrob/order&store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
            case 'PRE':
-                $referer = substr($this->transaction->dominio, strpos($this->transaction->dominio,'/index.php'));
+                $referer = substr($this->transaction->dominio,0, strpos($this->transaction->dominio,'/index.php'));
                 return $referer . '/index.php?fc=module&module=qb&controller=compra&store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');                                
             default:
                 break;
@@ -127,10 +127,10 @@ class Cuatrob extends Simulador {
                 $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
                 return $referer . '/index.php/pasat4b/standard/resultado?' . http_build_query($this->getReturnData($result));
             case 'OC':
-                $referer = substr($this->transaction->dominio, strpos($this->transaction->dominio,'/index.php'));
+                $referer = substr($this->transaction->dominio,0, strpos($this->transaction->dominio,'/index.php'));
                 return $referer . '/index.php?route=payment/cuatrob/callback&' . http_build_query($this->getReturnData($result));
             case 'PRE':
-                $referer = substr($this->transaction->dominio, strpos($this->transaction->dominio,'/index.php'));
+                $referer = substr($this->transaction->dominio,0, strpos($this->transaction->dominio,'/index.php'));
                 return $referer . '/index.php?fc=module&module=qb&controller=result&' . http_build_query($this->getReturnData($result));                
             default:
                 break;
@@ -144,10 +144,10 @@ class Cuatrob extends Simulador {
                 $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
                 return $referer . '/index.php/pasat4b/standard/recibo';
             case 'OC':
-                $referer = substr($this->transaction->dominio, strpos($this->transaction->dominio,'/index.php'));
+                $referer = substr($this->transaction->dominio,0, strpos($this->transaction->dominio,'/index.php'));
                 return $referer . '/index.php?route=checkout/success';
             case 'PRE':
-                $referer = substr($this->transaction->dominio, strpos($this->transaction->dominio,'/index.php'));
+                $referer = substr($this->transaction->dominio,0, strpos($this->transaction->dominio,'/index.php'));
                 return $referer . '/index.php?fc=module&module=qb&controller=recibo';                 
             default:
                 break;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Mptests\Simuladores;
 
 use Mptests\Simuladores\Simulador;
@@ -39,7 +38,7 @@ class Sermepa extends Simulador {
     }
 
     public function getAmount($request, $modulo) {
-        return $request->getRequest('Ds_Merchant_Amount', 0) . ' ' . $this->toIso($request->getRequest('Ds_Merchant_Currency'), self::ISO_TYPE_CURR);
+        return number_format($request->getRequest('Ds_Merchant_Amount', 0),2) . ' ' . $this->toIso($request->getRequest('Ds_Merchant_Currency'), self::ISO_TYPE_CURR);
     }
 
     public function getLang(HttpRequest $request) {
@@ -57,7 +56,18 @@ class Sermepa extends Simulador {
     public function notify($result) {
         
     }
-
+    
+    public function safeReferencia(HttpRequest $request) {
+        $sessionContainer = new Container('sermepa');
+        $sessionContainer->MerchantCode = $request->getPost('Ds_Merchant_MerchantCode');
+        $sessionContainer->Terminal = $request->getPost('Ds_Merchant_Terminal');
+        $sessionContainer->MerchantURL = $request->getPost('Ds_Merchant_MerchantURL');
+        $sessionContainer->UrlOK = $request->getPost('Ds_Merchant_UrlOK');
+        $sessionContainer->UrlKO = $request->getPost('Ds_Merchant_UrlKO');
+        
+        $this->transaction->referencia = $request->getPost('Ds_Merchant_Order');
+    }
+    
     public function getReturnData($result) {
         $sessionContainer = new Container('sermepa');
         if ($result)
@@ -81,44 +91,4 @@ class Sermepa extends Simulador {
                         ), $arr_result
         );
     }
-
-    private function getUrlOK(HttpRequest $request) {
-        switch ($this->transaction->modulo) {
-            case 'MAGE':
-                $referer = str_replace('/index.php', '', $this->transaction->dominio);
-                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
-                return $referer . '/index.php/pasat4b/standard/compra?store=' . $request->getPost('id_comercio') . '&order=' . $request->getPost('order');
-            case 'PRE':
-                return;
-            default:
-                break;
-        }
-    }
-
-    private function getMerchantUrl($result) {
-        switch ($this->transaction->modulo) {
-            case 'MAGE':
-                $referer = str_replace('/index.php', '', $this->transaction->dominio);
-                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
-                return $referer . '/index.php/pasat4b/standard/resultado?' . http_build_query($this->getReturnData($result));
-            case 'PRE':
-                return;
-            default:
-                break;
-        }
-    }
-
-    private function getUrlKO() {
-        switch ($this->transaction->modulo) {
-            case 'MAGE':
-                $referer = str_replace('/index.php', '', $this->transaction->dominio);
-                $referer = str_replace('/pasat4b/standard/redirect', '', $referer);
-                return $referer . '/index.php/pasat4b/standard/recibo';
-            case 'PRE':
-                return;
-            default:
-                break;
-        }
-    }
-
 }
